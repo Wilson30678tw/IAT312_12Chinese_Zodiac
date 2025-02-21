@@ -6,8 +6,32 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Startmenu.unity
+    guid: 1d7504efeac336d4a9db0e3b829572d8
+  - enabled: 1
+    path: Assets/Scenes/Goat.unity
+    guid: a71deb5e67564424287b4f7608fbeba0
+  - enabled: 1
+    path: Assets/Scenes/Rooster.unity
+    guid: 4c3d0efb55fe7d24c937594df11b339e
+  - enabled: 1
+    path: Assets/Scenes/Dragon.unity
+    guid: 8e855b17e2a0ba14cb03ed07785c107d
+  - enabled: 1
+    path: Assets/Scenes/Snake.unity
+    guid: 4427c0a11fe69544bbb53ef164092bc4
+  - enabled: 1
+    path: Assets/Scenes/Boss.unity
+    guid: 6369b017fc6179d4981746df1461c8d4
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 50462fe08a1747944b5f43610e9da0ec
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    guid: 17534479fa81dd6439be0dc322119b9a
+  - enabled: 1
+    path: Assets/Scenes/LevelSelect.unity
+    guid: adbf7665d73584b4f893511fbae506a1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
