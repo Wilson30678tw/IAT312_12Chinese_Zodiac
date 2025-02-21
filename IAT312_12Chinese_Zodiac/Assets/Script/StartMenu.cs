@@ -5,7 +5,7 @@ public class StartMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("SampleScene"); // 切换到关卡选择页面
+        SceneManager.LoadScene("LevelSelect"); // 切换到关卡选择页面
     }
 
     public void OpenTutorial()
