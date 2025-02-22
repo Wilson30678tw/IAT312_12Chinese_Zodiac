@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  jumpForce: 10
+  jumpForce: 7
   maxJumps: 2
   groundCheck: {fileID: 1898912017}
   groundLayer:
@@ -238,10 +238,8 @@ MonoBehaviour:
   nightVisionDuration: 5
   dashSpeed: 15
   dashDuration: 0.2
-  flySpeed: 5
-  maxFlyHeight: 10
-  flyDuration: 2
-  flyCooldown: 5
+  canFly: 0
+  flySpeed: 2
   nightVisionIcon: {fileID: 1381399389}
   nightVisionCooldownText: {fileID: 475651835}
   dashIcon: {fileID: 1938770532}
