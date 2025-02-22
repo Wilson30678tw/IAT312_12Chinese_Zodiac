@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private float flyTimer = 0f; 
     private float flyCooldownTimer = 0f; 
     private bool isFlyCooldown = false; 
+    private float baseGravity = 1f;
 
     [Header("UI 冷卻顯示")] public Image nightVisionIcon;
     public TMP_Text nightVisionCooldownText;
@@ -59,11 +60,19 @@ public class PlayerController : MonoBehaviour
         jumpCount = maxJumps;
 
         string sceneName = SceneManager.GetActiveScene().name;
+        flyIcon.gameObject.SetActive(false);
+        flyCooldownText.gameObject.SetActive(false);
+        dashIcon.gameObject.SetActive(false);
+        dashCooldownText.gameObject.SetActive(false);
+        nightVisionIcon.gameObject.SetActive(false);
+        nightVisionCooldownText.gameObject.SetActive(false);
 
         if (sceneName == "Rooster")
         {
             globalLight.intensity = 0.005f;
             canUseNightVision = true;
+            nightVisionIcon.gameObject.SetActive(true);
+            nightVisionCooldownText.gameObject.SetActive(true);
         }
         else if (sceneName == "Goat")
         {
@@ -72,10 +81,14 @@ public class PlayerController : MonoBehaviour
         else if (sceneName == "Snake")
         {
             canDash = true;
+            dashIcon.gameObject.SetActive(true);
+            dashCooldownText.gameObject.SetActive(true);
         }
         else if (sceneName == "Dragon")
         {
             canFly = true;
+            flyIcon.gameObject.SetActive(true);  // ✅ 只在 Dragon 地圖顯示飛行 UI
+            flyCooldownText.gameObject.SetActive(true);
         }
         else if (sceneName == "Boss" || sceneName == "Tutorial")
         {
@@ -83,7 +96,15 @@ public class PlayerController : MonoBehaviour
             canUseNightVision = true;
             maxJumps = 2;
             canFly = true;
+            flyIcon.gameObject.SetActive(true);
+            flyCooldownText.gameObject.SetActive(true);
+            dashIcon.gameObject.SetActive(true);
+            dashCooldownText.gameObject.SetActive(true);
+            nightVisionIcon.gameObject.SetActive(true);
+            nightVisionCooldownText.gameObject.SetActive(true);
+           
         }
+
 
         if (globalLight == null)
         {
@@ -122,24 +143,49 @@ public class PlayerController : MonoBehaviour
         }
 
         // ✅ **Flight Activation**
-        if (canFly && !isFlying && flyCount < maxFlyUses && !isFlyCooldown)
+        if (SceneManager.GetActiveScene().name == "Dragon" && canFly)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
+            if (!isFlying && flyCount < maxFlyUses && !isFlyCooldown)
             {
-                StartFlying();
+                if (Input.GetKeyDown(KeyCode.LeftControl))
+                {
+                    StartFlying();
+                }
+            }
+
+            // ✅ **飛行中允許玩家控制升降**
+            if (isFlying)
+            {
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    rb.gravityScale = Mathf.Max(0, rb.gravityScale - 0.3f * Time.deltaTime); // ✅ 按住逐步減少重力
+                }
+                else
+                {
+                    rb.gravityScale = Mathf.Min(baseGravity, rb.gravityScale + 0.3f * Time.deltaTime); // ✅ 鬆開逐步恢復重力
+                }
+
+                flyTimer -= Time.deltaTime;
+                if (flyTimer <= 0)
+                {
+                    StopFlying(true);
+                }
             }
         }
 
-        // ✅ **Flight Control: Hold for Up, Release for Down**
-        if (isFlying)
+        // ✅ 飛行冷卻計時
+        if (isFlyCooldown)
         {
-            float vertical = Input.GetKey(KeyCode.LeftControl) ? 1 : -1;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, vertical * flySpeed);
-
-            flyTimer -= Time.deltaTime;
-            if (flyTimer <= 0)
+            flyCooldownTimer -= Time.deltaTime;
+            if (flyCooldownTimer <= 0)
             {
-                StopFlying(true);
+                isFlyCooldown = false;
+                flyCount++;
+
+                if (flyCount >= maxFlyUses)
+                {
+                    canFly = false; // ✅ 3次後永久禁用飛行
+                }
             }
         }
 
@@ -186,7 +232,8 @@ public class PlayerController : MonoBehaviour
 
         if (isFlying)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, flySpeed);
+            float vertical = Input.GetKey(KeyCode.LeftControl) ? 1 : -1;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, vertical * flySpeed); // ✅ **在 FixedUpdate 控制飛行**
         }
 
         // ✅ **如果站在移動平台上，玩家跟隨平台移動**
@@ -290,26 +337,37 @@ public class PlayerController : MonoBehaviour
     void StartFlying()
     {
         isFlying = true;
-        flyTimer = 5f;
-        rb.gravityScale = 0;
+        flyTimer = 5f; // ✅ 開始倒數 5 秒
+        rb.gravityScale = baseGravity; // ✅ 確保重力恢復到正常值
     }
 
     void StopFlying(bool naturalEnd = false)
     {
         isFlying = false;
-        rb.gravityScale = 1;
+        rb.gravityScale = baseGravity; // ✅ 恢復正常重力
 
         if (naturalEnd)
         {
             isFlyCooldown = true;
-            flyCooldownTimer = 5f;
+            flyCooldownTimer = 5f; // ✅ 進入冷卻
         }
     }
     void UpdateCooldownUI()
     {
         UpdateSkillUI(nightVisionIcon, nightVisionCooldownText, ref nightVisionCooldown);
         UpdateSkillUI(dashIcon, dashCooldownText, ref dashCooldown);
-        UpdateSkillUI(flyIcon, flyCooldownText, ref flyCooldownTimer);
+        if (isFlying)
+        {
+            UpdateSkillUI(flyIcon, flyCooldownText, ref flyTimer);  // ✅ 傳遞飛行時間
+        }
+        else if (isFlyCooldown)
+        {
+            UpdateSkillUI(flyIcon, flyCooldownText, ref flyCooldownTimer);  // ✅ 傳遞冷卻時間
+        }
+        else if (canFly)
+        {
+            flyCooldownText.text =  maxFlyUses - flyCount+"/3"; // ✅ 顯示剩餘次數
+        }
     }
 
     void UpdateSkillUI(Image icon, TMP_Text cooldownText, ref float cooldown)

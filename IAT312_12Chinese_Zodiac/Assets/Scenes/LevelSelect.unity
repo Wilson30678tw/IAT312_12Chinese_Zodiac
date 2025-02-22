@@ -163,12 +163,14 @@ MonoBehaviour:
   nightVisionDuration: 5
   dashSpeed: 15
   dashDuration: 0.2
+  canFly: 1
   flySpeed: 5
-  maxFlyHeight: 10
   nightVisionIcon: {fileID: 868047375}
   nightVisionCooldownText: {fileID: 1142869659}
   dashIcon: {fileID: 1677808945}
   dashCooldownText: {fileID: 540712652}
+  flyIcon: {fileID: 1112977505}
+  flyCooldownText: {fileID: 2063292576}
 --- !u!50 &38995945
 Rigidbody2D:
   serializedVersion: 5
@@ -1185,7 +1187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSystem: {fileID: 1919739436}
-  levelToLoad: 1
+  levelToLoad: 6
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,7 +1882,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -527.7, y: -242.15512}
+  m_AnchoredPosition: {x: -516.3, y: -242.15512}
   m_SizeDelta: {x: 9.2032, y: 6.8637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1112977505
@@ -2831,7 +2833,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -528.5, y: -249.89754}
+  m_AnchoredPosition: {x: -517.1, y: -249.89754}
   m_SizeDelta: {x: 7.1029, y: 8.6211}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063292576
