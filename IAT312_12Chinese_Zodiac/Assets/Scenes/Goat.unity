@@ -159,16 +159,19 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  globalLight: {fileID: 0}
+  MovingblockLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  globalLight: {fileID: 619394801}
   nightVisionDuration: 5
   dashSpeed: 15
   dashDuration: 0.2
   flySpeed: 5
   maxFlyHeight: 10
-  nightVisionIcon: {fileID: 0}
-  nightVisionCooldownText: {fileID: 0}
-  dashIcon: {fileID: 0}
-  dashCooldownText: {fileID: 0}
+  nightVisionIcon: {fileID: 711090884}
+  nightVisionCooldownText: {fileID: 1088283749}
+  dashIcon: {fileID: 1575059806}
+  dashCooldownText: {fileID: 1088283749}
 --- !u!50 &38995945
 Rigidbody2D:
   serializedVersion: 5

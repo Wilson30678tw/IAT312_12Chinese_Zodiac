@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private int jumpCount;
     private bool isGrounded;
     private SpriteRenderer spriteRenderer;
+    private Transform currentPlatform = null;
+    private Vector3 lastPlatformPosition;
 
     [Header("地面檢測")]
     public Transform groundCheck;
@@ -39,13 +41,18 @@ public class PlayerController : MonoBehaviour
     private bool canFly = false;
     private bool isFlying = false;
     public float flySpeed = 5f;
-    public float maxFlyHeight = 10f;
 
     [Header("UI 冷卻顯示")]
     public Image nightVisionIcon;
     public TMP_Text nightVisionCooldownText;
     public Image dashIcon;
     public TMP_Text dashCooldownText;
+    public Image flyIcon;
+    public TMP_Text flyCooldownText;
+    public float GetNightVisionCooldown()
+    {
+        return nightVisionCooldown;  // ✅ 返回當前的夜視冷卻時間
+    }
 
     private bool facingRight = true;
 
@@ -85,7 +92,6 @@ public class PlayerController : MonoBehaviour
         if (globalLight == null)
         {
             globalLight = Object.FindAnyObjectByType<Light2D>(); 
-
         }
     }
 
@@ -107,7 +113,6 @@ public class PlayerController : MonoBehaviour
             jumpCount--;
         }
 
-        // ✅ **夜視技能冷卻 & 觸發**
         if (canUseNightVision && Input.GetKeyDown(KeyCode.N) && nightVisionCooldown <= 0)
         {
             ToggleNightVision();
@@ -117,46 +122,46 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+        // ✅ **第一次按 `LeftControl` 時，啟動飛行並開始 5 秒倒數**
+        // ✅ **飛行系統**
+        if (canFly)
+        {
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                StartFlying();
+            }
+            else
+            {
+                StopFlying();
+            }
+        }
 
-        if (canFly && Input.GetKey(KeyCode.LeftControl))
-        {
-            StartFlying();
-        }
-        else
-        {
-            StopFlying();
-        }
 
-        // ✅ **確保冷卻時間減少**
-        if (nightVisionCooldown > 0)
-        {
-            nightVisionCooldown -= Time.deltaTime;
-        }
-        if (dashCooldown > 0)
-        {
-            dashCooldown -= Time.deltaTime;
-        }
+
+
+        if (nightVisionCooldown > 0) nightVisionCooldown -= Time.deltaTime;
+        if (dashCooldown > 0) dashCooldown -= Time.deltaTime;
 
         UpdateCooldownUI();
     }
 
     void FixedUpdate()
     {
-        bool wasGrounded = isGrounded;
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+              // ✅ **按住 LeftControl 時上升**
+              if (isFlying && Input.GetKey(KeyCode.LeftControl))
+              {
+                  rb.linearVelocity = new Vector2(rb.linearVelocity.x, flySpeed);
+              }
+        
 
-        if (!wasGrounded && isGrounded)
+        if (currentPlatform != null)
         {
-            jumpCount = maxJumps;
-        }
-
-        if (isFlying)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, flySpeed);
+            Vector3 platformMovement = currentPlatform.position - lastPlatformPosition;
+            transform.position += platformMovement;
+            lastPlatformPosition = currentPlatform.position;
         }
     }
 
-    // ✅ **夜視模式開關**
     void ToggleNightVision()
     {
         if (!isNightVisionActive)
@@ -164,16 +169,11 @@ public class PlayerController : MonoBehaviour
             isNightVisionActive = true;
             globalLight.intensity = 1.5f;
             globalLight.color = new Color(1f, 1f, 0.8f);
-            nightVisionCooldown = nightVisionDuration + 3f; // ✅ 設定冷卻時間（夜視時間 + 3 秒冷卻）
+            nightVisionCooldown = nightVisionDuration + 3f;
             StartCoroutine(NightVisionTimer());
         }
     }
-    public float GetNightVisionCooldown()
-    {
-        return nightVisionCooldown; // ✅ 允許外部腳本讀取 `nightVisionCooldown`
-    }
 
-    // ✅ **夜視模式 5 秒後關閉**
     IEnumerator NightVisionTimer()
     {
         yield return new WaitForSeconds(nightVisionDuration);
@@ -182,7 +182,6 @@ public class PlayerController : MonoBehaviour
         isNightVisionActive = false;
     }
 
-    // ✅ **`Shift` 觸發 Dash（地面 & 空中）**
     IEnumerator Dash()
     {
         isDashing = true;
@@ -208,27 +207,23 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
     }
 
-    // ✅ **龍關卡飛行**
     void StartFlying()
     {
         isFlying = true;
-        rb.gravityScale = 0.2f;
-        if (transform.position.y < maxFlyHeight) 
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, flySpeed);
-        }
+        rb.gravityScale = 0.2f; // ✅ 減少重力影響
     }
 
     void StopFlying()
     {
         isFlying = false;
-        rb.gravityScale = 1f;
+        rb.gravityScale = 1f; // ✅ 恢復正常重力
     }
 
     void UpdateCooldownUI()
     {
         UpdateSkillUI(nightVisionIcon, nightVisionCooldownText, ref nightVisionCooldown);
         UpdateSkillUI(dashIcon, dashCooldownText, ref dashCooldown);
+        //UpdateSkillUI(flyIcon, flyCooldownText, ref flyCooldownTimer);
     }
 
     void UpdateSkillUI(Image icon, TMP_Text cooldownText, ref float cooldown)

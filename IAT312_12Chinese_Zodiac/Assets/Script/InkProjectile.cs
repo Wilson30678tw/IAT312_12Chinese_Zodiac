@@ -57,5 +57,9 @@ public class InkProjectile : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        else if (collision.CompareTag("Gong")) // ✅ 確保鑼鼓有 Tag "Gong"
+        {
+            Destroy(gameObject); // ✅ 墨汁擊中鑼鼓後消失
+        }
     }
 }
