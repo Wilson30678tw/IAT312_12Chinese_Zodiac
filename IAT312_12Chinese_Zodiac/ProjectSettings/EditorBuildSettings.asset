@@ -21,11 +21,23 @@ EditorBuildSettings:
     path: Assets/Scenes/Rooster.unity
     guid: a7aac829dfa83e84aa7f7ba8942194f8
   - enabled: 1
+    path: Assets/Scenes/Goat.unity
+    guid: 3b6c9ad338a29fb4db32ee33092d8bd5
+  - enabled: 1
     path: Assets/Scenes/Boss.unity
     guid: 6e22bc4d3d7b5904289b4fb0a3abb99c
   - enabled: 1
-    path: Assets/Scenes/Goat.unity
-    guid: 3b6c9ad338a29fb4db32ee33092d8bd5
+    path: Assets/Scenes/Snake.unity
+    guid: 23f3aa9596718524fac11da6e67f378c
+  - enabled: 1
+    path: Assets/Scenes/Dragon.unity
+    guid: 140730d46f0f988459f0d4abce581d70
+  - enabled: 1
+    path: Assets/Scenes/Goodending.unity
+    guid: f47cb68b9dcf76145919ad46eed8935a
+  - enabled: 1
+    path: Assets/Scenes/Badending.unity
+    guid: a23cbd3e1726e7f46a0b18ab011e8b1d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

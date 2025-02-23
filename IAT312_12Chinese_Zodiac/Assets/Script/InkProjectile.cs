@@ -6,6 +6,7 @@ public class InkProjectile : MonoBehaviour
     public float speed = 10f; // 子弹速度
     public float lifetime = 3f; // 存活时间
     public int damage = 10; // 伤害值
+    public LayerMask groundLayers;
 
     private Rigidbody2D rb;
 
@@ -46,20 +47,48 @@ public class InkProjectile : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log($"💥 墨汁碰撞到了 {collision.gameObject.name}");
+        if (collision.CompareTag("Boss")) // ✅ 確保 Boss 也會受傷
+        {
+            BossHealth bossHealth = collision.GetComponent<BossHealth>();
+            if (bossHealth != null)
+            {
+                bossHealth.TakeDamage(damage);
+                Debug.Log($"⚔️ 墨汁擊中了 Boss！造成 {damage} 傷害！");
+            }
+            Destroy(gameObject);
+        }
+        else if (collision.CompareTag("Enemy"))
+        {
+            EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage);
+            }
+            Destroy(gameObject);
+        }
 
         if (collision.CompareTag("Enemy"))
         {
-            Enemy enemy = collision.GetComponent<Enemy>();
-            if (enemy != null)
+            EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>(); // **改成 `EnemyHealth`**
+            if (enemyHealth != null)
             {
-                enemy.TakeDamage(damage);
-                Debug.Log("💥 墨汁击中了敌人！");
+                enemyHealth.TakeDamage(damage);
+                Debug.Log($"💥 墨汁击中了敌人！造成 {damage} 伤害！");
+            }
+            else
+            {
+                Debug.LogError("❌ 未找到 `EnemyHealth` 组件！");
             }
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Gong")) // ✅ 確保鑼鼓有 Tag "Gong"
         {
             Destroy(gameObject); // ✅ 墨汁擊中鑼鼓後消失
+        }
+        else if (((1 << collision.gameObject.layer) & groundLayers) != 0) // ✅ **檢測 Layer 6~9**
+        {
+            Debug.Log("🧱 墨汁击中了地面 (Layer 6~9)，销毁！");
+            Destroy(gameObject);
         }
     }
 }

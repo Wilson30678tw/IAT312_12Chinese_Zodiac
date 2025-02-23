@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // ✅ **Flight Activation**
-        if (SceneManager.GetActiveScene().name == "Dragon" && canFly)
+        if ((SceneManager.GetActiveScene().name == "Dragon" || SceneManager.GetActiveScene().name == "Boss" || SceneManager.GetActiveScene().name == "Tutorial") && canFly)
         {
             if (!isFlying && flyCount < maxFlyUses && !isFlyCooldown)
             {

@@ -238,7 +238,7 @@ MonoBehaviour:
   nightVisionDuration: 5
   dashSpeed: 15
   dashDuration: 0.2
-  canFly: 0
+  canFly: 1
   flySpeed: 2
   nightVisionIcon: {fileID: 1381399389}
   nightVisionCooldownText: {fileID: 475651835}

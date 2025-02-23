@@ -8,6 +8,7 @@ TagManager:
   - HiddenPlatform
   - Gong
   - InkProjectile
+  - Boss
   layers:
   - Default
   - TransparentFX
