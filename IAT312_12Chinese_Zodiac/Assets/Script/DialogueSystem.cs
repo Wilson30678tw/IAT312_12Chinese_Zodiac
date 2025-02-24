@@ -19,6 +19,7 @@ public class DialogueSystem : MonoBehaviour
 
     void Start()
     {
+        
         if (dialogueBox == null)
         {
             Debug.LogError("❌ dialogueBox 未綁定！請檢查 Inspector 設置！");
@@ -102,15 +103,15 @@ public class DialogueSystem : MonoBehaviour
 
     public void EndDialogue()
     {
-        if (!isDialogueActive) return;
-
         isDialogueActive = false;
         dialogueBox.SetActive(false);
-        Debug.Log("🛑 對話結束，載入場景：" + levelToLoad);
+    
+        Debug.Log("🛑 對話結束，等待玩家確認是否切換場景");
 
-        // ✅ **確保對話結束後載入指定場景**
-        if (!string.IsNullOrEmpty(levelToLoad))
+        // ✅ **只有當玩家完成整個對話時，才切換場景**
+        if (!string.IsNullOrEmpty(levelToLoad) && currentLine >= dialogueLines.Length - 1)
         {
+            Debug.Log("🚀 對話結束，載入場景：" + levelToLoad);
             SceneManager.LoadScene(levelToLoad);
         }
     }
