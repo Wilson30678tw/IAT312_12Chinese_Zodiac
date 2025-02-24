@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FA_TEDDY_Hurt_Dizzy_007_0: -2003126473680217282
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

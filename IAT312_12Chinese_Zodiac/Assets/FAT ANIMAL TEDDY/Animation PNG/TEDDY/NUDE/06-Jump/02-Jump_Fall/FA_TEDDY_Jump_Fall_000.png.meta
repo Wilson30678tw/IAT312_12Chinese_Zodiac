@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FA_TEDDY_Jump_Fall_000_0: 3360536628123565700
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

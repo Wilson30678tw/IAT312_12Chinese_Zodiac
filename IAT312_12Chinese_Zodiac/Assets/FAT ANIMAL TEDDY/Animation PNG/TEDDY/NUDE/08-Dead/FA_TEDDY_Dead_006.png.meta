@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FA_TEDDY_Dead_006_0: -8707363638238730948
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

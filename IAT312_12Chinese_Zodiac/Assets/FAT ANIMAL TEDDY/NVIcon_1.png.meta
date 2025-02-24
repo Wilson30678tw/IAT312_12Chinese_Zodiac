@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      NVIcon_1_0: -3662395626974249629
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
