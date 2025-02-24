@@ -1,16 +1,20 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class WinCondition : MonoBehaviour
 {
-    public string nextScene; // ✅ **每一關對應的下一個場景**
-    
+    public string runeName; // ✅ 設定符文名稱（GoatRune、RoosterRune、SnakeRune、DragonRune）
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.CompareTag("Player"))
         {
-            Debug.Log($"🎉 觸碰符文，進入 {nextScene}！");
-            SceneManager.LoadScene("LevelSelect");
+            Debug.Log($"🟠 碰到符文：{runeName}");
+
+            if (RuneManager.instance != null)
+            {
+                RuneManager.instance.CollectRune();
+                Destroy(gameObject); // ✅ 符文被收集後消失
+            }
         }
     }
 }

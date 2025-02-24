@@ -12,7 +12,7 @@ public class DialogueSystem : MonoBehaviour
     private bool isProcessingInput = false; // ✅ 防止 `E` 鍵連續觸發
     private float inputCooldown = 0.5f; // ✅ 冷卻時間，防止 `E` 被連續觸發
     private float lastInputTime = -1f; // ✅ 記錄 `E` 的最後輸入時間
-    public string levelToLoad = "Goat"; // ✅ 指定切換場景名稱
+    public string levelToLoad ; // ✅ 指定切換場景名稱
 
     public bool IsDialogueActive => isDialogueActive;
     public int CurrentLine => currentLine;
@@ -106,12 +106,11 @@ public class DialogueSystem : MonoBehaviour
 
         isDialogueActive = false;
         dialogueBox.SetActive(false);
-        Debug.Log("🛑 對話框關閉，currentLine 重置為 -1");
+        Debug.Log("🛑 對話結束，載入場景：" + levelToLoad);
 
-        // ✅ 確保對話結束後才載入新場景
+        // ✅ **確保對話結束後載入指定場景**
         if (!string.IsNullOrEmpty(levelToLoad))
         {
-            Debug.Log("🚀 載入場景：" + levelToLoad);
             SceneManager.LoadScene(levelToLoad);
         }
     }
