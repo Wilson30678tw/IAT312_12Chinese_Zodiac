@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FA_TEDDY_Walk_Happy_009_0: 2751586281972874935
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

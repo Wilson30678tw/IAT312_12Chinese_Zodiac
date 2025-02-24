@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FA_TEDDY_Idle_Blink_000_0: -1559435888588800433
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

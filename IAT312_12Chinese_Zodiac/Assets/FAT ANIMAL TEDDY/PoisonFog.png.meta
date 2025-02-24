@@ -184,7 +184,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PoisonFog_0: -8795429313051295632
+      PoisonFog_1: -7168844008414453208
+      PoisonFog_2: 1475995317690950960
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

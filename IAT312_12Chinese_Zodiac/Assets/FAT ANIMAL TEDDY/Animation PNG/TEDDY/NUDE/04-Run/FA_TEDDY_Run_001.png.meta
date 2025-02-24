@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FA_TEDDY_Run_001_0: 4445757295119540359
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
