@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviour
     public GameObject gameOverUI; // 玩家死亡時的 UI
     public Slider healthSlider;
     public TMP_Text healthText;
+    public float fallDeathThreshold = -10f;
+    private bool isDead = false;
 
     void Start()
     {
@@ -20,10 +22,21 @@ public class PlayerHealth : MonoBehaviour
             healthSlider.value = currentHealth; // 初始同步血條
         }
         gameOverUI.SetActive(false); // 確保遊戲開始時 UI 隱藏
+        Time.timeScale = 1f;
+    }
+    void Update()
+    {
+        // ✅ **檢查玩家是否掉出地圖**
+        if (transform.position.y < fallDeathThreshold)
+        {
+            Debug.Log("💀 玩家掉出地圖，死亡！");
+            Die();
+        }
     }
 
     public void TakeDamage(int damage)
     {
+        if (isDead) return;
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // 確保血量不低於 0
 

@@ -350,6 +350,7 @@ MonoBehaviour:
   gameOverUI: {fileID: 1307394987}
   healthSlider: {fileID: 1715407162}
   healthText: {fileID: 744313031}
+  fallDeathThreshold: -10
 --- !u!1 &113449757
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,9 +434,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 121226422}
-        m_TargetAssemblyTypeName: EnemyHealth, Assembly-CSharp
-        m_MethodName: ReturnToLevelSelect
+      - m_Target: {fileID: 38995950}
+        m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
+        m_MethodName: Respawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4784,7 +4785,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Back to level select
+  m_text: Try Again
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
