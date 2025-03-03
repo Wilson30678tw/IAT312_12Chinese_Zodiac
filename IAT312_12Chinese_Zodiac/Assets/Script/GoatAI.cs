@@ -13,11 +13,13 @@ public class GoatAI : MonoBehaviour
     private Rigidbody2D rb;
     private bool movingRight = true; // 控制移動方向
     private SpriteRenderer spriteRenderer; // 控制圖像翻轉
-
+    private bool isRunning = true; // 默认奔跑
+    private Animator anim;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        anim.SetBool("isRunning", isRunning); // ✅ 确保一开始播放 Run 动画
 
         if (rb == null)
             Debug.LogError("❌ Rigidbody2D 未找到！請確保 Goat 物件上有 Rigidbody2D 組件！");
@@ -30,6 +32,10 @@ public class GoatAI : MonoBehaviour
     void Update()
     {
         Patrol();
+        if (!anim.GetBool("isRunning"))
+        {
+            anim.SetBool("isRunning", true);
+        }
     }
 
     void Patrol()
